@@ -1,0 +1,17 @@
+#!/bin/bash
+ 
+# Quick script to archive all un-archived logs in the backup logs directory.
+# written by Jeff Fritz jefffritz @gmail.com
+ 
+LOG_DIR='/var/log/backup'
+TAR_CMD='/bin/tar -cvzf'
+FILES_TO_ARCHIVE='*.log'
+RM_CMD='/bin/rm'
+ 
+ARCHIVE_DATE=`date --rfc-3339=seconds | tr ' ' '_'`
+ARCHIVE_NAME="log-archive-$ARCHIVE_DATE.tar.gz"
+ 
+$TAR_CMD $LOG_DIR/$ARCHIVE_NAME $LOG_DIR/$FILES_TO_ARCHIVE
+ 
+# Cleanup logs that we archived.
+$RM_CMD $LOG_DIR/$FILES_TO_ARCHIVE
