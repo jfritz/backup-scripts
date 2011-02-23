@@ -4,7 +4,7 @@
  
 # Initialization and such. Variables starting in 't_' are relevant to twitter.
 my $logname = $ARGV[0];
-my $t_app   = '/home/jfritz/backup-scripts/ttytter.pl';
+my $t_app   = '/home/jeff/backup-scripts/ttytter.pl';
  
 # Some basic checks
 (-f $logname) or die ("Unable to open log $logname !");
