@@ -10,9 +10,9 @@ set -u # Exit if we attempt to use an uninitialized variable
 # - PASSPHRASE = gnupg passphrase for encrypting backups
 # - AWS_ACCESS_KEY_ID = amazon s3 access key
 # - AWS_SECRET_ACCESS_KEY = amazon s3 secret key
-export PASSPHRASE='PW_HERE'
-export AWS_ACCESS_KEY_ID='KEY_HERE'
-export AWS_SECRET_ACCESS_KEY='KEY_HERE'
+export PASSPHRASE='AKPPpfYd-8TyoB3se44g9Ajw9'
+export AWS_ACCESS_KEY_ID='AKIAJKBFJDZDOTRXWUHQ'
+export AWS_SECRET_ACCESS_KEY='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'
  
 # Duplicity location
 DUPLICITY='/usr/bin/duplicity'
@@ -24,7 +24,7 @@ LOG_TIME=`date --rfc-3339=seconds | tr '[:space:]' '.'`
 TEE='/usr/bin/tee -a'
  
 # Twitter status script location
-TWITTER_SCRIPT='/home/jfritz/backup-scripts/send-twitter-status.pl'
+TWITTER_SCRIPT='/home/jeff/backup-scripts/send-twitter-status.pl'
  
 # Base URL for destination S3 buckets
 DEST_URL_BASE='s3://s3.amazonaws.com/fs-bak'
@@ -32,7 +32,7 @@ DEST_URL_BASE='s3://s3.amazonaws.com/fs-bak'
 # Space-separated list of fully-qualified directories to back up.
 # Any directory /foo/bar/baz to be backed up must ahve a corresponding bucket
 # in S3 at "${DEST_URL_BASE}-foo-bar-baz"
-BACKUP_DIRS='/home/jfritz /media/External/Archive /media/External/Main /media/External/Music'
+BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
  
 # This should be 'full' or 'incremental'. If omitted, duplicity will
 # do a full if the directory has never been backed up at the destination;
