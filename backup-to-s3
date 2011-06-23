@@ -20,7 +20,8 @@ V_LEVEL='debug'
  
 # Log preferences 
 LOG_BASE='/var/log/backup/backup'
-LOG_TIME=`date --rfc-3339=seconds | tr '[:space:]' '.'`
+LOG_TIME=`date +%F_%H%M`
+LOG_NAME="${LOG_BASE}_${LOG_TIME}.log"
 TEE='/usr/bin/tee -a'
  
 # Twitter status script location
@@ -32,7 +33,9 @@ DEST_URL_BASE='s3://s3.amazonaws.com/fs-bak'
 # Space-separated list of fully-qualified directories to back up.
 # Any directory /foo/bar/baz to be backed up must ahve a corresponding bucket
 # in S3 at "${DEST_URL_BASE}-foo-bar-baz"
-BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
+# BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
+# BACKUP_DIRS='/home/jeff /media/Master/Main/Pictures'
+BACKUP_DIRS='/media/Master/Main/Pictures'
  
 # This should be 'full' or 'incremental'. If omitted, duplicity will
 # do a full if the directory has never been backed up at the destination;
@@ -41,13 +44,12 @@ BACKUP_TYPE=$1
  
 # ---------------------- User serviceable parts stop here! ------------------------
  
+touch $LOG_NAME
 for i in $BACKUP_DIRS
 do
     SRC=$i
     DEST_BUCKET=`echo $i | tr '/' '-'`
     DEST="${DEST_URL_BASE}${DEST_BUCKET}"
-    LOG_NAME="${LOG_BASE}.${DEST_BUCKET}.${LOG_TIME}log"
-    touch $LOG_NAME
     echo "-----------------------" | $TEE $LOG_NAME
     echo "Starting backup;" | $TEE $LOG_NAME
     echo " type   = $BACKUP_TYPE" | $TEE $LOG_NAME
@@ -56,6 +58,7 @@ do
     echo " cmd    = $DUPLICITY $BACKUP_TYPE --verbosity $V_LEVEL $SRC $DEST >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
  
     # Do the backup and log it
+    echo "Executing. Output from Duplicity: " | $TEE $LOG_NAME
     $DUPLICITY $BACKUP_TYPE --verbosity notice $SRC $DEST >> $LOG_NAME 2>&1
     echo " ... complete. " | $TEE $LOG_NAME
     echo "-----------------------" | $TEE $LOG_NAME
