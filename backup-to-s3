@@ -35,7 +35,6 @@ DEST_URL_BASE='s3://s3.amazonaws.com/fs-bak'
 # in S3 at "${DEST_URL_BASE}-foo-bar-baz"
 # BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
 BACKUP_DIRS='/home/jeff /media/Master/Main/Pictures'
-# BACKUP_DIRS='/media/Master/Main/Pictures'
  
 # This should be 'full' or 'incremental'. If omitted, duplicity will
 # do a full if the directory has never been backed up at the destination;
