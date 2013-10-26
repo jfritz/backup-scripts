@@ -1,0 +1,49 @@
+#!/bin/bash
+# Front-end script to duplicity to clean up rsync.net backups
+# written by Jeff Fritz jefffritz@gmail.com
+
+# NOTE This should be run first, then the duplicity full|inc command.
+# See http://www.rsync.net/resources/howto/duplicity.html
+ 
+set -e # Exit if anything returns a bad return value.
+set -u # Exit if we attempt to use an uninitialized variable
+ 
+# Duplicity location
+DUPLICITY='/usr/bin/duplicity'
+ 
+# Log preferences 
+LOG_BASE='/var/log/backup/'
+LOG_TIME=`date +%F_%H%M`
+LOG_NAME="${LOG_BASE}backup-cleanup_${LOG_TIME}.log"
+TEE='/usr/bin/tee -a'
+ 
+# Source and destination points
+RSYNCNET_URL="scp://40346@usw-s004.rsync.net/fs"
+ 
+# Space-separated list of fully-qualified directories to cleanup
+# These mount points should be folders on the remote backup host; i.e.: 
+# BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
+# remote backup points = 'home-jeff' 'media-Master-Archive' 'media-Master-Main' etc.
+# Must be in the formet "/path/to/dir1 /path/to/dir2"
+BACKUP_DIRS='/home/jeff /media/Master/Main/Pictures'
+ 
+# GPG key to use for encryption
+KEY_ID="E14023DB"
+ 
+# ---------------------- User serviceable parts stop here! ------------------------
+ 
+touch $LOG_NAME
+echo "Backup log at ${LOG_TIME} - ${LOG_NAME}"
+echo "Doing some clean up..."
+
+for i in $BACKUP_DIRS
+do
+    DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
+    DEST="${DEST_URL_BASE}${DEST_BUCKET}"
+    echo "----------${DEST_BUCKET}-------------" | $TEE $LOG_NAME
+    echo "$DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
+    $DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1
+
+    echo "$DUPLICITY remove-older-than 30D $DEST --verbosity notice >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
+    $DUPLICITY remove-older-than 30D $DEST --verbosity notice >> $LOG_NAME 2>&1
+done

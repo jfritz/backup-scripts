@@ -1,0 +1,53 @@
+#!/bin/bash
+# Front-end script to duplicity to send backups to rsync.net
+# written by Jeff Fritz jefffritz@gmail.com
+ 
+set -e # Exit if anything returns a bad return value.
+set -u # Exit if we attempt to use an uninitialized variable
+ 
+# Duplicity location
+DUPLICITY='/usr/bin/duplicity'
+ 
+# Log preferences 
+LOG_BASE='/var/log/backup/'
+LOG_TIME=`date +%F_%H%M`
+LOG_NAME="${LOG_BASE}backup_${LOG_TIME}.log"
+TEE='/usr/bin/tee -a'
+ 
+# Source and destination points
+RSYNCNET_URL="scp://40346@usw-s004.rsync.net/fs"
+ 
+# Space-separated list of fully-qualified directories to back up.
+# These mount points should be folders on the remote backup host; i.e.: 
+# BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
+# remote backup points = 'home-jeff' 'media-Master-Archive' 'media-Master-Main' etc.
+# Must be in the formet "/path/to/dir1 /path/to/dir2"
+BACKUP_DIRS='/home/jeff'
+# BACKUP_DIRS='/home/jeff /media/Master/Main/Pictures'
+ 
+# This should be 'full' or 'incremental'. If omitted, duplicity will
+# do a full if the directory has never been backed up at the destination;
+# otherwise it will perform an incremental.
+BACKUP_TYPE=$1
+
+# GPG key to use for encryption
+KEY_ID="E14023DB"
+ 
+# ---------------------- User serviceable parts stop here! ------------------------
+ 
+touch $LOG_NAME
+echo "Backup log at ${LOG_TIME} - ${LOG_NAME}"
+echo "Backing up points: $BACKUP_DIRS"
+
+for i in $BACKUP_DIRS
+do
+    SRC=$i
+    DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
+    DEST="${DEST_URL_BASE}${DEST_BUCKET}"
+    echo "------------${DEST_BUCKET}-----------" | $TEE $LOG_NAME
+    echo "Starting ${BACKUP_TYPE} backup..." | $TEE $LOG_NAME
+    echo "Source $SRC" | $TEE $LOG_NAME
+    echo "Destination $DEST" | $TEE $LOG_NAME
+    echo "$DUPLICITY $BACKUP_TYPE --verbosity notice --encrypt-key=\"$KEY_ID\" $SRC $DEST >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
+    $DUPLICITY $BACKUP_TYPE --verbosity notice --encrypt-key="$KEY_ID" $SRC $DEST >> $LOG_NAME 2>&1
+done
