@@ -29,6 +29,7 @@ BACKUP_DIRS='/home/jeff /media/Master/Main/Pictures'
  
 # GPG key to use for encryption
 KEY_ID="E14023DB"
+export PASSPHRASE=""
  
 # ---------------------- User serviceable parts stop here! ------------------------
  
@@ -41,10 +42,11 @@ do
     DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
     DEST_URL_BASE="${RSYNCNET_URL}/${DEST_BUCKET}"
     DEST="${DEST_URL_BASE}"
-    echo "----------${DEST_BUCKET}-------------" | $TEE $LOG_NAME
+    echo "---------- cleanup: ${DEST_BUCKET}-------------" | $TEE $LOG_NAME
     echo "$DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
     $DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1
 
+    echo "---------- remove-older-than 30D: ${DEST_BUCKET}-------------" | $TEE $LOG_NAME
     echo "$DUPLICITY remove-older-than 30D $DEST --verbosity notice --force >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
     $DUPLICITY remove-older-than 30D $DEST --verbosity notice --force >> $LOG_NAME 2>&1
 done
