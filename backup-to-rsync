@@ -5,8 +5,9 @@
 set -e # Exit if anything returns a bad return value.
 set -u # Exit if we attempt to use an uninitialized variable
  
-# Duplicity location
+# Duplicity location and options
 DUPLICITY='/usr/bin/duplicity'
+ARCHIVE_DIR="/archive"
  
 # Log preferences 
 LOG_BASE='/var/log/backup/'
@@ -49,6 +50,6 @@ do
     echo "Starting ${BACKUP_TYPE} backup..." | $TEE $LOG_NAME
     echo "Source $SRC" | $TEE $LOG_NAME
     echo "Destination $DEST" | $TEE $LOG_NAME
-    echo "$DUPLICITY $BACKUP_TYPE --verbosity notice --encrypt-key=\"$KEY_ID\" $SRC $DEST >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
-    $DUPLICITY $BACKUP_TYPE --verbosity notice --encrypt-key="$KEY_ID" $SRC $DEST >> $LOG_NAME 2>&1
+    echo "$DUPLICITY $BACKUP_TYPE --verbosity notice --archive-dir="${ARCHIVE_DIR}" --encrypt-key=\"$KEY_ID\" $SRC $DEST >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
+    $DUPLICITY $BACKUP_TYPE --verbosity notice --archive-dir="${ARCHIVE_DIR}" --encrypt-key="$KEY_ID" $SRC $DEST >> $LOG_NAME 2>&1
 done
