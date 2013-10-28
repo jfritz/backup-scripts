@@ -40,7 +40,7 @@ for i in $BACKUP_DIRS
 do
     DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
     DEST_URL_BASE="${RSYNCNET_URL}/${DEST_BUCKET}"
-    DEST="${DEST_URL_BASE}${DEST_BUCKET}"
+    DEST="${DEST_URL_BASE}"
     echo "----------${DEST_BUCKET}-------------" | $TEE $LOG_NAME
     echo "$DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
     $DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1
