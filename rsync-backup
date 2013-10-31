@@ -33,6 +33,7 @@ BACKUP_TYPE=$1
 
 # GPG key to use for encryption
 KEY_ID="E14023DB"
+export PASSPHRASE=""
  
 # ---------------------- User serviceable parts stop here! ------------------------
  
