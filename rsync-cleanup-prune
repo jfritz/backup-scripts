@@ -18,17 +18,17 @@ LOG_NAME="${LOG_BASE}backup-cleanup_${LOG_TIME}.log"
 TEE='/usr/bin/tee -a'
  
 # Source and destination points
-RSYNCNET_URL="scp://40346@usw-s004.rsync.net/fs"
+RSYNCNET_URL="scp://40346@usw-s004.rsync.net/linode"
  
 # Space-separated list of fully-qualified directories to cleanup
 # These mount points should be folders on the remote backup host; i.e.: 
 # BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
 # remote backup points = 'home-jeff' 'media-Master-Archive' 'media-Master-Main' etc.
 # Must be in the formet "/path/to/dir1 /path/to/dir2"
-BACKUP_DIRS='/home/jeff /media/Master/Main/Pictures'
+BACKUP_DIRS='/home/jeff /etc'
  
 # GPG key to use for encryption
-KEY_ID="E14023DB"
+KEY_ID="01F2766D"
 export PASSPHRASE=""
  
 # ---------------------- User serviceable parts stop here! ------------------------
