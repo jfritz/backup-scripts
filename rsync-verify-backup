@@ -8,29 +8,11 @@
 set -e # Exit if anything returns a bad return value.
 set -u # Exit if we attempt to use an uninitialized variable
  
-# Duplicity location
-DUPLICITY='/usr/bin/duplicity'
- 
-# Log preferences 
-LOG_BASE='/var/log/backup/'
-LOG_TIME=`date +%F_%H%M`
-LOG_NAME="${LOG_BASE}backup-verify_${LOG_TIME}.log"
-TEE='/usr/bin/tee -a'
- 
-# Source and destination points
-RSYNCNET_URL="scp://40346@usw-s004.rsync.net/linode"
- 
-# Space-separated list of fully-qualified directories to back up.
-# These mount points should be folders on the remote backup host; i.e.: 
-# BACKUP_DIRS='/home/jeff /media/Master/Archive /media/Master/Main /media/Master/Music'
-# remote backup points = 'home-jeff' 'media-Master-Archive' 'media-Master-Main' etc.
-# Must be in the formet "/path/to/dir1 /path/to/dir2"
-# BACKUP_DIRS='/home/jeff'
-BACKUP_DIRS='/home/jeff /etc'
- 
-# GPG key to use for encryption
-KEY_ID="01F2766D"
-export PASSPHRASE=""
+# Custom string, if any, for logs
+LOG_BASENAME="backup-verify"
+
+# Bring in configuration
+source backups.conf
  
 # ---------------------- User serviceable parts stop here! ------------------------
  

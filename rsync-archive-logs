@@ -4,13 +4,7 @@
 # written by Jeff Fritz jefffritz @gmail.com
 # This script is meant to be run every 30 days
  
-LOG_DIR='/var/log/backup'
-TAR_CMD='/bin/tar -cvzf'
-FILES_TO_ARCHIVE='*.log'
-RM_CMD='/bin/rm'
- 
-ARCHIVE_DATE=`date +%F_%H%M`
-ARCHIVE_NAME="log-archive-$ARCHIVE_DATE.tar.gz"
+source backups.conf
  
 $TAR_CMD $LOG_DIR/$ARCHIVE_NAME $LOG_DIR/$FILES_TO_ARCHIVE
  
