@@ -26,6 +26,6 @@ do
     DEST_URL_BASE="${RSYNCNET_URL}/${DEST_BUCKET}"
     DEST="${DEST_URL_BASE}"
     echo "---------- verify: ${DEST_BUCKET}-------------" | $TEE $LOG_NAME
-    echo "$DUPLICITY verify --verbosity notice --encrypt-key=\"${KEY_ID}\" $DEST /tmp >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
-    $DUPLICITY verify --verbosity notice --encrypt-key="$KEY_ID" $DEST /tmp >> $LOG_NAME 2>&1
+    echo "$DUPLICITY verify --verbosity notice --archive-dir="${ARCHIVE_DIR}" --encrypt-key=\"${KEY_ID}\" $DEST $i >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
+    $DUPLICITY verify --verbosity notice --archive-dir="${ARCHIVE_DIR}" --encrypt-key="$KEY_ID" $DEST $i >> $LOG_NAME 2>&1
 done
