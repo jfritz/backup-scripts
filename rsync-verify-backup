@@ -12,7 +12,8 @@ set -u # Exit if we attempt to use an uninitialized variable
 LOG_BASENAME="backup-verify"
 
 # Bring in configuration
-source backups.conf
+APP_PATH=`dirname $0`
+source "$APP_PATH/backups.conf"
  
 # ---------------------- User serviceable parts stop here! ------------------------
  
