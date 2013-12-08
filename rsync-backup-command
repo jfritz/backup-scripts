@@ -1,0 +1,31 @@
+#!/bin/bash
+# Front-end script to duplicity to execute duplicity commands for
+# rsync.net backups
+# written by Jeff Fritz jefffritz@gmail.com
+ 
+set -e # Exit if anything returns a bad return value.
+set -u # Exit if we attempt to use an uninitialized variable
+ 
+echo $0
+
+# Custom string, if any, for logs
+LOG_BASENAME="backup-command"
+
+# Bring in configuration
+APP_PATH=`dirname $0`
+source "$APP_PATH/backups.conf"
+
+COMMAND=$1
+ 
+# ---------------------- User serviceable parts stop here! ------------------------
+ 
+
+for i in $BACKUP_DIRS
+do
+    SRC=$i
+    DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
+    DEST_URL_BASE="${RSYNCNET_URL}/${DEST_BUCKET}"
+    DEST="${DEST_URL_BASE}"
+    echo "Processing for $DEST..."
+    $DUPLICITY $COMMAND --verbosity notice --archive-dir="${ARCHIVE_DIR}" --encrypt-key="$KEY_ID" $DEST 
+done
