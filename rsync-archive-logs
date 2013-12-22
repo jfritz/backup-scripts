@@ -5,6 +5,7 @@
 # This script is meant to be run every 30 days
  
 # Bring in configuration
+LOG_BASENAME="archive_logs"
 APP_PATH=`dirname $0`
 source "$APP_PATH/backups.conf"
  
