@@ -24,7 +24,7 @@ for i in $BACKUP_DIRS
 do
     SRC=$i
     DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
-    DEST_URL_BASE="${RSYNCNET_URL}/${DEST_BUCKET}"
+    DEST_URL_BASE="${DESTINATION_PATH}/${DEST_BUCKET}"
     DEST="${DEST_URL_BASE}"
     echo "Processing for $DEST..."
     $DUPLICITY $COMMAND --verbosity notice --archive-dir="${ARCHIVE_DIR}" --encrypt-key="$KEY_ID" $DEST 

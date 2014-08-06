@@ -24,7 +24,7 @@ echo "Doing some clean up..."
 for i in $BACKUP_DIRS
 do
     DEST_BUCKET=`echo ${i:1} | tr '/' '-'`
-    DEST_URL_BASE="${RSYNCNET_URL}/${DEST_BUCKET}"
+    DEST_URL_BASE="${DESTINATION_PATH}/${DEST_BUCKET}"
     DEST="${DEST_URL_BASE}"
     echo "---------- cleanup: ${DEST_BUCKET}-------------" | $TEE $LOG_NAME
     echo "$DUPLICITY cleanup $DEST --verbosity notice --force >> $LOG_NAME 2>&1" | $TEE $LOG_NAME
