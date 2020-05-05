@@ -1,7 +1,7 @@
 #!/bin/bash
 # Front-end script to duplicity to execute duplicity commands for
 # rsync.net backups
-# written by Jeff Fritz jefffritz@gmail.com
+# written by Jeff Fritz https://github.com/jfritz
  
 set -e # Exit if anything returns a bad return value.
 set -u # Exit if we attempt to use an uninitialized variable
