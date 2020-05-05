@@ -1,6 +1,6 @@
 #!/bin/bash
 # Front-end script to duplicity to send backups to rsync.net
-# written by Jeff Fritz jefffritz@gmail.com
+# written by Jeff Fritz https://github.com/jfritz
  
 set -e # Exit if anything returns a bad return value.
 set -u # Exit if we attempt to use an uninitialized variable
