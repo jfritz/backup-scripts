@@ -1,6 +1,6 @@
 #!/bin/bash
 # Front-end script to duplicity to clean up rsync.net backups
-# written by Jeff Fritz jefffritz@gmail.com
+# written by Jeff Fritz https://github.com/jfritz
 
 # NOTE This should be run first, then the duplicity full|inc command.
 # See http://www.rsync.net/resources/howto/duplicity.html
